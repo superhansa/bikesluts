@@ -3,7 +3,7 @@ var router = express.Router();
 var jsonReader = require('../lib/jsonReader');
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  jsonReader.read('./data/trips-2017.5.1-2017.5.31.json',function(fileContent){
+  jsonReader.read('./data/10trips.json',function(fileContent){
     res.render('index', { title: 'Express', jsonFile: fileContent });
   });
   
