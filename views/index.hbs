@@ -1,0 +1,8 @@
+<h1>{{title}}</h1>
+<p>Showing stats for all stations (in and out)</p>
+<dl>
+  {{#each stations}}
+    <dt>{{this.station_id}} =></dt>
+      <dd>{{this.count}}</dd>
+  {{/each}}
+</dl>
