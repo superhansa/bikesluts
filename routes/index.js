@@ -1,7 +1,5 @@
 var express = require('express')
 var router = express.Router()
-var JSONStream = require('JSONStream')
-var _ = require('lodash')
 
 var jsonReader = require('../lib/jsonReader')
 /* GET home page. */
@@ -19,63 +17,20 @@ router.get('/', function (req, res, next) {
 })
 
 router.get('/stream10', function (req, res, next) {
-  var occurrences = {}
-  jsonReader.readStream('./data/10trips.json')
-    .pipe(JSONStream.parse('trips.*'))
-    .on('data', function (data) {
-      var startStationId = parseInt(data.start_station_id, 10)
-      var endStationId = parseInt(data.end_station_id, 10)
-      if (typeof occurrences[startStationId] === 'undefined') {
-        occurrences[startStationId] = {count: 1}
-      } else {
-        occurrences[startStationId].count++
-      }
-
-      if (typeof occurrences[endStationId] === 'undefined') {
-        occurrences[endStationId] = {count: 1}
-      } else {
-        occurrences[endStationId].count++
-      }
-    })
-    .on('end', function () {
-      var sorted = _.map(occurrences, function (obj, id) {
-        return {station_id: id, count: obj.count}
-      })
-      return res.render('index', {
-        title: 'Ninja Turtles',
-        stations: _.orderBy(sorted, ['count', 'station_id'], ['desc', 'asc'])
-      })
-    })
+  var stations = jsonReader.readStream('./data/10trips.json')
+  console.log(stations)
+  return res.render('index', {
+    title: 'Ninja Turtles',
+    stations: stations
+  })
 })
 
 router.get('/full_stream_ahead', function (req, res, next) {
-  var occurrences = {}
-  jsonReader.readStream('./data/trips-2017.5.1-2017.5.31.json')
-    .pipe(JSONStream.parse('trips.*'))
-    .on('data', function (data) {
-      var startStationId = parseInt(data.start_station_id, 10)
-      var endStationId = parseInt(data.end_station_id, 10)
-      if (typeof occurrences[startStationId] === 'undefined') {
-        occurrences[startStationId] = {count: 1}
-      } else {
-        occurrences[startStationId].count++
-      }
-
-      if (typeof occurrences[endStationId] === 'undefined') {
-        occurrences[endStationId] = {count: 1}
-      } else {
-        occurrences[endStationId].count++
-      }
-    })
-    .on('end', function () {
-      var sorted = _.map(occurrences, function (obj, id) {
-        return {station_id: id, count: obj.count}
-      })
-      return res.render('index', {
-        title: 'Ninja Turtles',
-        stations: _.orderBy(sorted, ['count', 'station_id'], ['desc', 'asc'])
-      })
-    })
+  var stations = require('../data/sorted.json')
+  return res.render('index', {
+    title: 'Ninja Turtles',
+    stations: stations
+  })
 })
 
 module.exports = router
