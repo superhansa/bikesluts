@@ -1,8 +1,10 @@
 <h1>{{title}}</h1>
 <p>Showing stats for all stations (in and out)</p>
 <dl>
+  <dt class="heading">Station</dt>
+    <dd class="heading">Transactions</dd>
   {{#each stations}}
-    <dt>{{this.station_id}} =></dt>
+    <dt>{{this.station_id}}</dt>
       <dd>{{this.count}}</dd>
   {{/each}}
 </dl>
