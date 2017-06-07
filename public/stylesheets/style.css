@@ -17,6 +17,15 @@ dd {
   float: left;
   line-height: 2;
 }
+dt.heading,
+dd.heading {
+  font-family: "Vesper Libre", serif;
+  font-weight: bold;
+  text-align: left;
+  color: #800600;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
 dd {
   width: 80%;
   padding-left: 1em;
