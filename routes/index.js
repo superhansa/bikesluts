@@ -27,9 +27,10 @@ router.get('/stream10', function (req, res, next) {
 
 router.get('/full_stream_ahead', function (req, res, next) {
   var stations = require('../data/sorted.json')
+  var topTen = stations.slice(0, 10)
   return res.render('index', {
     title: 'Ninja Turtles',
-    stations: stations
+    stations: topTen
   })
 })
 
