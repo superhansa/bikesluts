@@ -9,6 +9,7 @@ dl
   width 400px
   margin 0
   font-family "Courier New", monospace;
+  counter-reset index
 
 dt, dd
   border-bottom 1px solid #ddd
@@ -32,3 +33,12 @@ dt
   width 15%
   text-align right
   font-weight bold
+  position relative
+
+  &:not(.heading)::before
+    counter-increment index
+    content counter(index)"."
+    font-weight normal
+    display block
+    position absolute
+    left 0
