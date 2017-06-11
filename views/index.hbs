@@ -1,10 +1,46 @@
 <h1>{{title}}</h1>
 <p>Showing stats for all stations (in and out)</p>
+<canvas id="top-station-chart" width="300" height="300"></canvas>
 <dl>
-  <dt class="heading">Station</dt>
+  <dt class="heading"># Station</dt>
     <dd class="heading">Transactions</dd>
   {{#each stations}}
     <dt>{{this.station_id}}</dt>
       <dd>{{this.count}}</dd>
   {{/each}}
 </dl>
+
+{{#extend "scripts"}}
+<script src="/Chart.js"></script>
+<script>
+  var stations = {{{json stations}}}
+  var top_ten = new Chart('top-station-chart', {
+    type: 'bar',
+    xAxisID: 'Station ID',
+    yAxisID: 'Count',
+    data: {
+      labels: stations.map(function (item) { return item.station_id }),
+      datasets: [{
+        label: 'Ins & outs',
+        data: stations.map(function (item) { return item.count }),
+        backgroundColor: [
+          '#39cccc',
+          '#01ff70',
+          '#aaaaaa',
+          '#85144b',
+          '#2ecc40',
+          '#f012be',
+          '#b10dc9',
+          '#ffdc00',
+          '#001f3f',
+          '#3d9970',
+          '#0074d9',
+          '#ff4136',
+          '#ff851b',
+          '#7fdbff'
+        ]
+      }]
+    }
+  })
+</script>
+{{/extend}}
